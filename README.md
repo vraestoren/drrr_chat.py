@@ -3,7 +3,8 @@ Web-API for [drrr.chat](https://drrr.chat) website which is dollars forum
 
 ## Example
 ```python
-import drrr_chat
-drrr_chat = drrr_chat.DrrrChat()
-drrr_chat.login(email="", password="")
+from drrr_chat import DrrrChat
+
+drrr_chat = DrrrChat()
+drrr_chat.login(emall="example@gmail.com", password="password")
 ```
