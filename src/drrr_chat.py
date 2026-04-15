@@ -16,8 +16,8 @@ class DrrrChat:
 		return self.session.post(f"{self.api}{endpoint}", data=data)
 
 	def _get(
-			self, endpoint: str, params: dict = {}) -> dict:
-		return self.session.get(endpoint, params=params).json()
+			self, endpoint: str, params: dict = {}) -> Response:
+		return self.session.get(endpoint, params=params)
 
 	def get_cookies(self) -> None:
 		response = self._get(self.api)
@@ -61,7 +61,7 @@ class DrrrChat:
 		return self._post("/register", data).json()
 
 	def send_confirmation_code(self, user_id: int) -> dict:
-		return self._post("/api/users/{user_id}/send-confirmation").json()
+		return self._post(f"/api/users/{user_id}/send-confirmation").json()
 
 	def forgot_password(self, email: str) -> dict:
 		data = {
@@ -93,7 +93,7 @@ class DrrrChat:
 			"include": include,
 			"page[offset]": offset
 		}
-		return self._get(f"{self.api}/api/discussions", params)
+		return self._get(f"{self.api}/api/discussions", params).json()
 
 	def get_announcements(
 			self,
@@ -105,7 +105,7 @@ class DrrrChat:
 			"filter[tag]": tag,
 			"page[offset]": offset
 		}
-		return self._get(f"{self.api}/api/discussions", params)
+		return self._get(f"{self.api}/api/discussions", params).json()
 
 	def get_following(
 			self,
@@ -116,7 +116,7 @@ class DrrrChat:
 			"page[offset]": offset,
 			"filter[subscription]": "following"
 		}
-		return self._get(f"{self.api}/api/discussions", params)
+		return self._get(f"{self.api}/api/discussions", params).json()
 
 	def create_discussion(
 			self,
@@ -145,7 +145,7 @@ class DrrrChat:
 		return self._post("/api/discussions", data).json()
 	
 	def get_notifications(self) -> dict:
-		return self._get(f"{self.api}/api/notifications")
+		return self._get(f"{self.api}/api/notifications").json()
 
 	def get_discussion(
 			self,
@@ -212,7 +212,7 @@ class DrrrChat:
 			"page[limit]": limit,
 			"sort": sort
 		}
-		return self._get(f"{self.api}/api/posts", params)
+		return self._get(f"{self.api}/api/posts", params).json()
 
 	def get_user_discussions(
 			self,
@@ -226,7 +226,7 @@ class DrrrChat:
 			"sort": sort,
 			"page[offset]": offset
 		}
-		return self._get(f"{self.api}/api/discussions", params)
+		return self._get(f"{self.api}/api/discussions", params).json()
 
 	def get_user_mentions(
 			self,
@@ -242,10 +242,10 @@ class DrrrChat:
 			"page[limit]": limit,
 			"sort": sort
 		}
-		return self._get(f"{self.api}/api/posts", params)
+		return self._get(f"{self.api}/api/posts", params).json()
 
 	def get_user_info(self, user_id: int) -> dict:
-		return self._get(f"{self.api}/api/users/{user_id}")
+		return self._get(f"{self.api}/api/users/{user_id}").json()
 
 	def comment_discussion(
 			self,
@@ -274,7 +274,7 @@ class DrrrChat:
 			"filter[q]": query,
 			"page[limit]": limit
 		}
-		return self._get(f"{self.api}/api/users", params)
+		return self._get(f"{self.api}/api/users", params).json()
 
 	def search_discussion(
 			self,
@@ -286,7 +286,7 @@ class DrrrChat:
 			"page[limit]": limit,
 			"include": include
 		}
-		return self._get(f"{self.api}/api/discussions", params)
+		return self._get(f"{self.api}/api/discussions", params).json()
 
 	def mark_all_discussions_read(self) -> dict:
 		data = {
@@ -298,4 +298,4 @@ class DrrrChat:
 				"id": self.user_id
 			}
 		}
-		return self._post(f"/api/users/{user_id}", data).json()
+		return self._post(f"/api/users/{self.user_id}", data).json()
