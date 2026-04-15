@@ -1,5 +1,5 @@
-from requests import Session
 from datetime import datetime
+from requests import Session, Response
 
 class DrrrChat:
 	def __init__(self) -> None:
@@ -12,7 +12,7 @@ class DrrrChat:
 		self.get_cookies()
 
 
-	def _post(self, endpoint: str, data: dict = None) -> None:
+	def _post(self, endpoint: str, data: dict = None) -> Response:
 		return self.session.post(f"{self.api}{endpoint}", data=data)
 
 	def _get(
